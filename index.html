@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Upload Images to Server</title>
+    <meta charset="utf-8">
+    
+</head>
+<body>
+
+<h1>Upload Image</h1>
+ 
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="files[]" multiple />
+    <input type="submit" value="Upload File" name="submit" />
+</form>
+            
+
+</body>
+
+<script>
+const url = 'https://testnet.mucitadel.io/v1/upload/profileupdate'
+const form = document.querySelector('form')
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault()
+
+  const files = document.querySelector('[type=file]').files
+  var formdata = new FormData();
+
+  for (let i = 0; i < files.length; i++) {
+    let file = files[i]
+    formdata.append("imageupload", file, "Screenshot from 2021-04-26 02-10-13.png");
+  }
+  var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function() {
+  if(this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://testnet.mucitadel.io/v1/upload/profileupdate");
+xhr.setRequestHeader("Accept-Language", "sl-SI");
+xhr.setRequestHeader("Authorization", "");
+
+xhr.send(formdata);
+})
+</script>
+
+</html>
